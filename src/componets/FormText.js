@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Alert from "./Alert";
 
 export default function FormText(props) {
-  const [text, setText] = useState("Enter Text Here !");
+  const [text, setText] = useState("");
 
   const handleChange = (event) => {
     console.log("On change");
@@ -68,6 +68,18 @@ export default function FormText(props) {
     }, 1500);
   };
 
+  // const disabledBtn = () =>{
+  //   {text.length>0? "opacity-100 cursor-pointer" : "opacity-25 cursor-not-allowed"}
+  // }
+
+  let classes;
+
+  if (text.length > 0) {
+    classes = `w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 opacity-100 cursor-pointer`;
+  } else {
+    classes = `w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 opacity-25 cursor-not-allowed`;
+  }
+
   return (
     <>
       <Alert alert={alert} />
@@ -103,15 +115,17 @@ export default function FormText(props) {
           <div className="mt-5 sm:mt-8 sm:flex flex-wrap sm:justify-center lg:justify-start">
             <div className="mt-3 sm:mt-0 sm:mr-3 mb-3">
               <button
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                 onClick={textUpcase}
+                className={`${classes}`}
+                disabled={text.length === 0}
               >
                 Text Uppercase
               </button>
             </div>
             <div className="mt-3 sm:mt-0 sm:mr-3 mb-3">
               <button
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                className={`${classes}`}
+                disabled={text.length === 0}
                 onClick={textLcCase}
               >
                 Text Lowercase
@@ -119,7 +133,8 @@ export default function FormText(props) {
             </div>
             <div className="mt-3 sm:mt-0 sm:mr-3 mb-3">
               <button
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                className={`${classes}`}
+                disabled={text.length === 0}
                 onClick={handleClearClick}
               >
                 Clear text
@@ -127,7 +142,8 @@ export default function FormText(props) {
             </div>
             <div className="mt-3 sm:mt-0 sm:mr-3 mb-3">
               <button
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                className={`${classes}`}
+                disabled={text.length === 0}
                 onClick={handleCopy}
               >
                 Copy text
@@ -135,7 +151,8 @@ export default function FormText(props) {
             </div>
             <div className="mt-3 sm:mt-0 sm:mr-3 mb-3">
               <button
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                className={`${classes}`}
+                disabled={text.length === 0}
                 onClick={handleExtraSpaces}
               >
                 Remove space
@@ -143,7 +160,8 @@ export default function FormText(props) {
             </div>
             <div className="mt-3 sm:mt-0 sm:mr-3 mb-3">
               <button
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                className={`${classes}`}
+                disabled={text.length === 0}
                 onClick={sentenceCase}
               >
                 Sentence case
@@ -151,7 +169,8 @@ export default function FormText(props) {
             </div>
             <div className="mt-3 sm:mt-0 sm:mr-3 mb-3">
               <button
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                className={`${classes}`}
+                disabled={text.length === 0}
                 onClick={capitalizedCase}
               >
                 Capitalized Case
@@ -159,7 +178,8 @@ export default function FormText(props) {
             </div>
             <div className="mt-3 sm:mt-0 sm:mr-3 mb-3">
               <button
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                className={`${classes}`}
+                disabled={text.length === 0}
                 onClick={capitalizedCase}
               >
                 Title Case
@@ -185,14 +205,28 @@ export default function FormText(props) {
                 props.mode === "white" ? "white" : "white"
               }`}
             >
-              <b>{text.split(" ").length}</b> words and <b>{text.length} </b> characters and <b>{text.split(/\r\n|\r|\n/).length}</b> Line Count
+              <b>
+                {
+                  text.split(" ").filter((element) => {
+                    return element.length !== 0;
+                  }).length
+                }
+              </b>
+              words and <b>{text.length} </b> characters and
+              <b> {text.split(/\r\n|\r|\n/).filter((element) => { return element.length !== 0; }).length}</b> Line Count
             </p>
             <p
               className={`block text-lg font-normal text-slate-400 mt-2 text-${
                 props.mode === "white" ? "white" : "white"
               }`}
             >
-              <b>{0.008 * text.split(" ").length}</b> Minutes read
+              <b>
+                {0.008 *
+                  text.split(" ").filter((element) => {
+                    return element.length !== 0;
+                  }).length}
+              </b>
+              Minutes read
             </p>
           </div>
         </div>
@@ -214,7 +248,7 @@ export default function FormText(props) {
                 props.mode === "white" ? "white" : "white"
               }`}
             >
-              {text}
+              {text.length > 0 ? text : "Nothing to preview!"}
             </p>
           </div>
         </div>
