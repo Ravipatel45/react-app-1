@@ -73,11 +73,10 @@ export default function FormText(props) {
   // }
 
   let classes;
-
   if (text.length > 0) {
-    classes = `w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 opacity-100 cursor-pointer`;
+    classes = `w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-${props.mode === "white" ? "green-800" : "indigo-600"} hover:bg-${props.mode === "white" ? "green-900" : "indigo-900"} md:py-4 md:text-lg md:px-10 opacity-100 cursor-pointer`;
   } else {
-    classes = `w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 opacity-25 cursor-not-allowed`;
+    classes = `w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-${props.mode === "white" ? "green-800" : "indigo-600"} hover:bg-${props.mode === "white" ? "green-900" : "indigo-900"} md:py-4 md:text-lg md:px-10 opacity-50 cursor-not-allowed`;
   }
 
   return (
@@ -101,8 +100,8 @@ export default function FormText(props) {
               } block bg-${
                 props.mode === "white" ? "gray-900" : "white"
               } w-full ${
-                props.mode === "white" ? "border-0" : "border"
-              } border-slate-300 rounded-md py-5 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-md`}
+                props.mode === "white" ? "border" : "border"
+              } border-black rounded-md py-5 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-md`}
               placeholder="Enter Text Here..."
               type="text"
               name="search"
@@ -205,14 +204,7 @@ export default function FormText(props) {
                 props.mode === "white" ? "white" : "white"
               }`}
             >
-              <b>
-                {
-                  text.split(" ").filter((element) => {
-                    return element.length !== 0;
-                  }).length
-                }
-              </b>
-              words and <b>{text.length} </b> characters and
+              <b> { text.split(" ").filter((element) => { return element.length !== 0; }).length } </b> words and <b>{text.length} </b> characters and
               <b> {text.split(/\r\n|\r|\n/).filter((element) => { return element.length !== 0; }).length}</b> Line Count
             </p>
             <p
@@ -220,13 +212,7 @@ export default function FormText(props) {
                 props.mode === "white" ? "white" : "white"
               }`}
             >
-              <b>
-                {0.008 *
-                  text.split(" ").filter((element) => {
-                    return element.length !== 0;
-                  }).length}
-              </b>
-              Minutes read
+              <b> {0.008 * text.split(" ").filter((element) => { return element.length !== 0; }).length} </b> Minutes read
             </p>
           </div>
         </div>
